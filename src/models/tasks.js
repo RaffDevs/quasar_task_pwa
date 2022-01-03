@@ -1,5 +1,18 @@
 import Vue from 'vue';
-import { LocalStorage } from 'quasar';
+
+const state = Vue.observable({
+  tasks: []
+});
+
+export function initTask() {
+  if (localStorage.getItem('tasks')) {
+    state.tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+}
+
+export function createTask(collection, task) {
+  if ()
+}
 
 export default new Vue({
   data: () => ({
@@ -7,9 +20,7 @@ export default new Vue({
   }),
 
   mounted() {
-    if (LocalStorage.has('tasks')) {
-      this.tasks = JSON.parse(LocalStorage.getItem('tasks'));
-    }
+    
   },
 
   methods: {
