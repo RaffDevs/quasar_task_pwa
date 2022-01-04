@@ -5,9 +5,13 @@ const state = Vue.observable({
   selectedCollection: ''
 });
 
-export function initStorage() {
+export function initCollections() {
   if (localStorage.getItem('collections')) {
     state.collections = JSON.parse(localStorage.getItem('collections'));
+    
+    if (state.collections.length > 0) {
+      state.selectedCollection = state.collections[0];
+    }
   }
 }
 

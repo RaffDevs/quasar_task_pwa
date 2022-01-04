@@ -44,7 +44,7 @@
 
       <div v-else class="flex column items-center q-mt-xl">
         <q-icon color="primary" name="mood_bad" size="80px" />
-        <div class="text-h5 text-primary">No collections yet</div>
+        <div class="text-h5 text-primary">No collections yet!</div>
       </div>
     </q-list>
   </q-drawer>

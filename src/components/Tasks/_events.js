@@ -8,6 +8,14 @@ export default new Vue({
 
     onCollectionDialogOpened(callback) {
       this.$on('openCollectionDialog', callback);
+    },
+
+    openTaskDialog() {
+      this.$emit('openTaskDialog');
+    },
+
+    onTaskDialogOpened(callback) {
+      this.$on('openTaskDialog', callback);
     }
   }
 });

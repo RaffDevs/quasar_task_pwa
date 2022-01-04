@@ -1,62 +1,84 @@
 <template>
   <div class="col-12 shadow-5">
-    <CollectionDialog/>
-    <div class="banner">
-      <q-banner inline-actions class="text-black">
-        <template v-slot:avatar>
-          <q-icon name="category" color="primary" />
-        </template>
-        {{ currentCollection }}
-        <template v-slot:action>
-          <q-btn round icon="more_vert" flat color="primary" />
-        </template>
-      </q-banner>
-      <q-separator />
-    </div>
+    <CollectionDialog />
+    <TaskDialog />
+    <TheHeader :currentCollection="currentCollection" />
 
-    <q-list padding>
+    <q-list padding v-if="tasks.length > 0">
       <q-item-label header>Tasks</q-item-label>
       <template v-for="(task, index) in tasks">
-        <Task 
-          :key="index" 
-          :caption="task.caption" 
-          :description="task.description" 
-          :done="task.isCompleted" 
+        <Task
+          :key="index"
+          :task="task"
         />
       </template>
     </q-list>
+
+    <div class="flex column items-center no-tasks" v-else>
+      <div class="text-h4 text-primary">No tasks yet!</div>
+
+      <q-btn
+        color="positive"
+        label="Crete a task"
+        flat
+        class="q-mt-md"
+        @click="taskDialog"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import TaskModel from 'src/models/tasks';
-import store from 'src/models/collection';
-import Task from './TaskItem.vue';
-import CollectionDialog from './CollectionDialog.vue';
+import taskEvents from "./_events";
+import storeTasks from "src/models/tasks";
+import storeCollection from "src/models/collection";
+
+// Components
+import Task from "./TaskItem.vue";
+import CollectionDialog from "./CollectionDialog.vue";
+import TaskDialog from "./TaskDialog.vue";
+import TheHeader from "./layout/TheHeader.vue";
 
 export default {
-  name: 'TasksContainer',
+  name: "TasksContainer",
 
   components: {
     Task,
-    CollectionDialog
+    CollectionDialog,
+    TaskDialog,
+    TheHeader,
   },
 
-  data: () => ({
-    tasks: [
-      { caption: 'A task 2', description: 'A incomplete task', isCompleted:true },
-      { caption: 'A task', description: 'A incomplete task', isCompleted:false },
-      { caption: 'A task', description: 'A incomplete task', isCompleted:true },
-      { caption: 'A task', description: 'A incomplete task', isCompleted:false },
-    ]
-  }),
-
   computed: {
-    currentCollection: () => store.selectedCollection
-  }
+    currentCollection() {
+      return storeCollection.selectedCollection;
+    },
 
+    tasks() {
+      return storeTasks.tasks.filter(
+        (task) => task.collection === this.currentCollection
+      );
+    },
+  },
+
+  methods: {
+    collectionDialog() {
+      taskEvents.openCollectionDialog();
+    },
+
+    taskDialog() {
+      taskEvents.openTaskDialog();
+    },
+  },
 };
 </script>
 
 <style>
+.border {
+  border: 1px solid red;
+}
+
+.no-tasks {
+  margin-top: 200px;
+}
 </style>

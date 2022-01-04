@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import store, { initStorage } from 'src/models/collection';
+import storeCollection, { initCollections } from 'src/models/collection';
+import storeTasks, { initTask } from 'src/models/tasks';
 import Drawer from 'src/components/Tasks/layout/TheDrawer.vue';
 
 export default {
@@ -29,7 +30,8 @@ export default {
   },
 
   mounted() {
-    initStorage()
+    initCollections();
+    initTask();
   },
 
   data: () => ({
@@ -38,7 +40,11 @@ export default {
 
   computed: {
     collections() {
-      return store.collections
+      return storeCollection.collections
+    },
+
+    tasks() {
+      return storeTasks.tasks
     }
   }
 

@@ -10,13 +10,14 @@
     </q-item-section>
     <q-item-section>{{ collection }}</q-item-section>
     <q-item-section side>
-      <q-badge label="10" />
+      <q-badge :label="notFinishedTasksCounter" />
     </q-item-section>
   </q-item>
 </template>
 
 <script>
-import store, { setCollection } from 'src/models/collection';
+import storeCollection, { setCollection } from 'src/models/collection';
+import storeTasks, {} from 'src/models/tasks';
 
 export default {
   props: {
@@ -33,11 +34,18 @@ export default {
 
   computed: {
     activeItem() {
-      if (store.selectedCollection === this.collection) {
+      if (storeCollection.selectedCollection === this.collection) {
         return true
       }
 
       return false
+    },
+
+    notFinishedTasksCounter() {
+      return storeTasks.tasks.filter(
+        task => task.isCompleted === false && 
+        task.collection === this.collection
+      ).length
     }
   }
 };

@@ -1,13 +1,13 @@
 <template>
   <q-item >
     <q-item-section side top>
-      <q-checkbox v-model="done" />
+      <q-checkbox v-model="completed" />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ caption }}</q-item-label>
+      <q-item-label>{{ task.title }}</q-item-label>
       <q-item-label caption>
-        {{description}}
+        {{task.description}}
       </q-item-label>
     </q-item-section>
 
@@ -23,18 +23,28 @@
 </template>
 
 <script>
+import { toggleTask } from 'src/models/tasks';
+
 export default {
   props: {
-    caption: {
-      type: String,
-    },
-    description: {
-      type: String
-    },
-    done: {
-      type: Boolean
+    task: {
+      type: Object
     }
   },
+
+  data() {
+    return {
+      completed: this.task.isCompleted
+    }
+  },
+
+  watch: {
+    completed(recent, old) {
+      toggleTask(this.task.id, recent);
+    }
+  }
+
+  
 
 };
 </script>

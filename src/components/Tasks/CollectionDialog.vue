@@ -29,7 +29,7 @@
 
 <script>
 import taskEvents from './_events';
-import { createCollection } from 'src/models/collection';
+import { createCollection, setCollection } from 'src/models/collection';
 
 export default {
   mounted() {
@@ -44,6 +44,7 @@ export default {
   methods: {
     handleCreateCollection() {
       createCollection(this.nameCollection);
+      setCollection(this.nameCollection);
       this.nameCollection = '';
     }
   }

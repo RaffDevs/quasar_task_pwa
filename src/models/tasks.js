@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { v4 as uuid } from 'uuid';
 
 const state = Vue.observable({
   tasks: []
@@ -11,41 +12,33 @@ export function initTask() {
 }
 
 export function createTask(collection, task) {
-  if ()
+  const data = {
+    id: uuid(),
+    collection: collection,
+    title: task.title,
+    description: task.description,
+    isCompleted: false
+  };
+
+  state.tasks.push(data);
+  saveTasks();
 }
 
-export default new Vue({
-  data: () => ({
-    tasks: []
-  }),
+export function saveTasks() {
+  const parsed = JSON.stringify(state.tasks);
+  localStorage.setItem('tasks', parsed);
+}
 
-  mounted() {
-    
-  },
+export function deleteTask(id) {
+  state.tasks = state.tasks.filter(task => task.id !== id);
+  saveTasks();
+}
 
-  methods: {
-    createTask(task) {
-      if (task && !this.tasks.some(target => target.id === task.id)) {
-        this.tasks.push(task);
-        this.saveTasks();
-      }
-    },
+export function toggleTask(id, value) {
+  const taskIndex = state.tasks.findIndex(task => task.id === id);
+  state.tasks[taskIndex].isCompleted = value;
 
-    saveTasks() {
-      const parsed = JSON.stringify(this.tasks);
-      LocalStorage.set('tasks', parsed);
-    },
+  saveTasks();
+}
 
-    deleteTask(target) {
-      this.tasks = this.tasks.filter(task => task.id !== target.id);
-      this.saveTasks();
-    },
-
-    completeTask(id) {
-      const taskIndex = this.tasks.findIndex(task => task.id === id);
-      this.tasks[taskIndex].isCompleted = false;
-
-      this.saveTasks();
-    }
-  }
-});
+export default state;
