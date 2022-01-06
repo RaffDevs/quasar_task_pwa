@@ -34,6 +34,11 @@ export function deleteTask(id) {
   saveTasks();
 }
 
+export function deleteTasksByCollection(collection) {
+  state.tasks = state.tasks.filter(task => task.collection !== collection);
+  saveTasks();
+}
+
 export function toggleTask(id, value) {
   const taskIndex = state.tasks.findIndex(task => task.id === id);
   state.tasks[taskIndex].isCompleted = value;
