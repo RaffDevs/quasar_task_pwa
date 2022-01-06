@@ -17,13 +17,14 @@
         color="negative"
         flat
         round
+        @click="delTask(task.id)"
       />
     </q-item-section>
   </q-item>
 </template>
 
 <script>
-import { toggleTask } from 'src/models/tasks';
+import { toggleTask, deleteTask } from 'src/models/tasks';
 
 export default {
   props: {
@@ -35,6 +36,12 @@ export default {
   data() {
     return {
       completed: this.task.isCompleted
+    }
+  },
+
+  methods: {
+    delTask(id) {
+      deleteTask(id);
     }
   },
 

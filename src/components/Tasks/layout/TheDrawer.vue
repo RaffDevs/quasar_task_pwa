@@ -12,13 +12,6 @@
     </div>
 
     <q-list>
-      <q-item>
-        <q-item-section avatar>
-          <q-icon color="primary" name="apps" />
-        </q-item-section>
-        <q-item-section>Overview</q-item-section>
-      </q-item>
-
       <q-separator />
       <q-item-label class="flex justify-between" header>
         <div class="q-mt-xs">Collections</div>
